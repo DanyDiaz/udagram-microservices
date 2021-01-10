@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverse-proxy
+  labels:
+    app: reverse-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reverse-proxy
+  template:
+    metadata:
+      labels:
+        app: reverse-proxy
+    spec:
+      containers:
+      - image: danydiaz/reverse-proxy
+        name: reverse-proxy
+        imagePullPolicy: Always          
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always

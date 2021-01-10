@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-feed
+  labels:
+    app: udagram-feed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: udagram-feed
+  template:
+    metadata:
+      labels:
+        app: udagram-feed
+    spec:
+      containers:
+      - image: danydiaz/udagram-feed
+        name: udagram-feed
+        imagePullPolicy: Always          
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
