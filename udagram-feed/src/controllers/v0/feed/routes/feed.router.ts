@@ -6,6 +6,7 @@ import * as AWS from '../../../../aws';
 import * as c from '../../../../config/config';
 
 const router: Router = Router();
+const { v4: uuidv4 } = require('uuid');
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
   if (!req.headers || !req.headers.authorization) {
@@ -28,20 +29,27 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
 
 // Get all feed items
 router.get('/', async (req: Request, res: Response) => {
+  let pid = uuidv4();
+  console.log(`${new Date().toLocaleString()}: ${pid} - Start - Requesting all feeds`);
   const items = await FeedItem.findAndCountAll({order: [['id', 'DESC']]});
   items.rows.map((item) => {
     if (item.url) {
       item.url = AWS.getGetSignedUrl(item.url);
     }
   });
+  console.log(`${new Date().toLocaleString()}: ${pid} - number of feeds returned: ${items.rows.length}`);
+  console.log(`${new Date().toLocaleString()}: ${pid} - Finish - Requesting all feeds`);
   res.send(items);
 });
 
 // Get a feed resource
 router.get('/:id',
     async (req: Request, res: Response) => {
+      let pid = uuidv4();
       const {id} = req.params;
+      console.log(`${new Date().toLocaleString()}: ${pid} - Start - Requesting feed with id ${id}`);
       const item = await FeedItem.findByPk(id);
+      console.log(`${new Date().toLocaleString()}: ${pid} - Finish - Requesting feed with id ${id}`);
       res.send(item);
     });
 
