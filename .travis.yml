@@ -9,8 +9,17 @@ script:
   - docker --version # print the version for logging
   - docker build -t reverse-proxy ./reverse-proxy
   - docker tag reverse-proxy danydiaz/reverse-proxy:latest
+  - docker build -t udagram-user ./udagram-user
+  - docker tag udagram-user danydiaz/udagram-user:latest
+  - docker build -t udagram-feed ./udagram-feed
+  - docker tag udagram-feed danydiaz/udagram-feed:latest
+  - docker build -t udagram-frontend ./udagram-frontend
+  - docker tag udagram-frontend danydiaz/udagram-frontend:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push danydiaz/reverse-proxy
+  - docker push danydiaz/udagram-user
+  - docker push danydiaz/udagram-feed
+  - docker push danydiaz/udagram-frontend
 
