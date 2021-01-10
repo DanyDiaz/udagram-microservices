@@ -4,8 +4,8 @@ metadata:
   labels:
     app: udagram-user
   name: udagram-user
-  namespace: udagram
-  selfLink: /api/v1/namespaces/udagram/services/udagram-user
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/udagram-user
 spec:
   ports:
   - name: "8080"

@@ -4,8 +4,8 @@ metadata:
   labels:
     app: udagram-frontend
   name: udagram-frontend
-  namespace: udagram
-  selfLink: /api/v1/namespaces/udagram/services/udagram-frontend
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/udagram-frontend
 spec:
   ports:
   - name: "8100"
